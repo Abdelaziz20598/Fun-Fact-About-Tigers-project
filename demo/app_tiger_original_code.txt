@@ -1,0 +1,68 @@
+const postData = async ( url ='', data = {name, type})=>{
+    console.log(data)
+        const response = await fetch(url, {
+        method:'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        //Body data type must match 'Content-Type' header
+        body: JSON.stringify(data),
+       });
+    
+        try {
+            const newData = await response.json();
+            console.log(newData);
+            return newData
+        }catch(error){
+        console.log("error", error);
+        }
+    }
+const addMovie = document.getElementById('addMovie');
+let Animal = {};
+let divGenerate = "";
+const container = document.getElementById("contentjs");
+
+addMovie.onclick = function(){
+    Animal.name = document.getElementById("aName").value;
+    Animal.type = document.getElementById("tyl").value; //why 'type' should be the same name of id and same name of Animal.'type' if i change it it will cause error
+    const funFactDiv = document.getElementById("funFactDiv");
+    const TigerImg = document.getElementById("TigerImg");
+postData('/addAnimal', Animal);
+
+    if (Animal.name ==="Tiger" || Animal.name ==="tiger" || Animal.name ==="Tigers" || Animal.name ==="tigers"){
+    divGenerate = `<div id="funFactDiv">
+    <p>
+    Tigers look like they're wearing stripy orange pyjamas, but these cuddly carnivores are fast, strong, and dangerous hunters.
+     If you ever meet one, RUN… and don't even think about inviting it over for tea! Read on for some fabulously fun tiger facts about these beautiful and ferocious giant cats — and we do mean giant.
+     They’re the biggest cats in the world! And they’re not all orange.
+     Did you know that the Bengal tiger is sometimes the colour of snow? Delve into more white tiger facts below.
+    </p>
+    <div>
+    <img src="https://files.worldwildlife.org/wwfcmsprod/images/Tiger_resting_Bandhavgarh_National_Park_India/hero_full/77ic6i4qdj_Medium_WW226365.jpg" alt="Tigers" id="TigerImg">
+    `
+    container.innerHTML = divGenerate;
+    tiger = "tiger";
+}
+// check if funFactdiv "element" exists >> at the begging the funFactdiv isnot created yet so it is undefined  ? but when i enter "tiger" it is created and funFactdiv is "object" has id="funFactdiv", when enetering anything else except tiger the funFactdiv is out of function scope but it still keep its value and id and itsn't null or undefined, >>> not that udendefined mean that the variable is not created or i create it after intialization or declaration, but null means i created variable x = null
+else if( typeof(funFactDiv) != 'undefined' && funFactDiv != null){
+    console.log(funFactDiv.id);
+    console.log(typeof(funFactDiv));
+    console.log(funFactDiv);
+    funFactDiv.remove();
+    //TigerImg.remove(); 
+}
+};
+
+// Async js
+/*
+setTimeout(()=>{
+    console.log("Third");
+}, 2000);
+function sync(){
+    console.log("First");
+}
+
+sync();
+
+console.log("Second")*/
